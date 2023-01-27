@@ -20,4 +20,12 @@ class NoteController extends GetxController {
         .bindStream(Database().noteStream(uid)); //stream coming from firebase
     super.onInit();
   }
+
+  void callagain() {
+    String uid = Get.find<AuthController>().user?.uid;
+    print("NoteController onit :: $uid");
+    noteList
+        .bindStream(Database().noteStream(uid)); //stream coming from firebase
+    // super.onInit();
+  }
 }

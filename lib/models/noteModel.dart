@@ -21,4 +21,9 @@ class NoteModel {
     body = json["body"];
     creationDate = json["creationDate"];
   }
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "$id $title $body  $creationDate";
+  }
 }

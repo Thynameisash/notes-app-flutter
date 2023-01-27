@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_note/controllers/userController.dart';
 import 'package:flutter_note/models/noteModel.dart';
 import 'package:flutter_note/models/user.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 
 class Database {
@@ -83,18 +88,42 @@ class Database {
   }
 
   Stream<List<NoteModel>> noteStream(String uid) {
+    final UserController userController = Get.find<UserController>();
+    List<String> allemails = [];
+    _firestore.collection(userCollection).snapshots().map(
+      (QuerySnapshot query) {
+        List<NoteModel> retVal = [];
+        query.docs.forEach(
+          (element) {
+            Map emails = element.data();
+            allemails.add(emails["email"]);
+            print("------------->>>>>>>>>${emails["email"]}");
+            // retVal.add(NoteModel.fromDocumentSnapshot(element));
+          },
+        );
+        return retVal;
+      },
+    );
+
     return _firestore
         .collection(userCollection)
         .doc(uid)
         .collection(noteCollection)
         .orderBy("creationDate", descending: true)
         .snapshots()
-        .map((QuerySnapshot query) {
-      List<NoteModel> retVal = [];
-      query.docs.forEach((element) {
-        retVal.add(NoteModel.fromDocumentSnapshot(element));
-      });
-      return retVal;
-    });
+        .map(
+      (QuerySnapshot query) {
+        List<NoteModel> retVal = [];
+        query.docs.forEach(
+          (element) {
+            Map emails = element.data();
+            print(uid);
+            // print("------------->>>>>>>>>${emails["email"]}");
+            retVal.add(NoteModel.fromDocumentSnapshot(element));
+          },
+        );
+        return retVal;
+      },
+    );
   }
 }

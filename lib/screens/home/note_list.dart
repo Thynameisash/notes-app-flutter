@@ -8,9 +8,18 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class NoteList extends StatelessWidget {
+class NoteList extends StatefulWidget {
+  @override
+  State<NoteList> createState() => _NoteListState();
+}
+
+class _NoteListState extends State<NoteList> {
   final AuthController authController = Get.find<AuthController>();
+
   final NoteController noteController = Get.find<NoteController>();
+
+  var ct = 0;
+
   final lightColors = [
     Colors.amber.shade300,
     Colors.lightGreen.shade300,
@@ -22,6 +31,13 @@ class NoteList extends StatelessWidget {
     Colors.greenAccent.shade400,
     Colors.cyanAccent,
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    noteController.callagain();
+  }
 
   @override
   Widget build(BuildContext context) {

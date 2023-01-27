@@ -6,7 +6,7 @@ import 'package:flutter_note/screens/home/note_list.dart';
 import 'package:flutter_note/screens/settings/setting.dart';
 import 'package:flutter_note/screens/widgets/custom_icon_btn.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+// import 'package:get/get_state_manager/get_state_manager.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final AuthController authController = Get.find<AuthController>();
